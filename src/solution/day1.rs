@@ -38,6 +38,8 @@ fn part2_solve(input: String) {
 }
 
 pub fn main(input: String) {
+    println!("Part 1");
     part1_solve(input.clone());
+    println!("Part 2");
     part2_solve(input);
 }
