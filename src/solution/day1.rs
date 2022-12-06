@@ -14,7 +14,7 @@ fn part1_solve(input: String) {
         }
     });
 
-    println!("Part 1: {}", max_val);
+    println!("{}", max_val);
 }
 
 fn part2_solve(input: String) {
@@ -34,7 +34,7 @@ fn part2_solve(input: String) {
     arr.push(now);
     arr.sort_by(|a, b| b.cmp(a));
 
-    println!("Part 2: {}", arr[0] + arr[1] + arr[2]);
+    println!("{}", arr[0] + arr[1] + arr[2]);
 }
 
 pub fn main(input: String) {
