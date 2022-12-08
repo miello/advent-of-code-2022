@@ -11,6 +11,7 @@ const DATA: &[fn(String)] = &[
     day5::main,
     day6::main,
     day7::main,
+    day8::main,
 ];
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Unable to read file");
