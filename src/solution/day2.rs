@@ -50,7 +50,7 @@ fn get_score(mine: &str, opponent: &str) -> i32 {
 
 fn part1_solve(input: String) {
     let mut current_score = 0;
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         let mut split = line.split(" ");
         let opponent = split.next().unwrap();
         let mine = split.next().unwrap();
@@ -61,7 +61,7 @@ fn part1_solve(input: String) {
 
 fn part2_solve(input: String) {
     let mut current_score = 0;
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         let mut split = line.split(" ");
         let opponent = split.next().unwrap();
         let result_status = split.next().unwrap();

@@ -26,7 +26,7 @@ fn split_data(input: String) -> Point {
 
 fn part1_solve(input: String) {
     let mut fully = 0;
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         let mut spliting = line.split(',');
         let first_point = split_data(spliting.next().unwrap().to_string());
         let second_point = split_data(spliting.next().unwrap().to_string());
@@ -47,7 +47,7 @@ fn part1_solve(input: String) {
 
 fn part2_solve(input: String) {
     let mut fully = 0;
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         let mut spliting = line.split(',');
         let first_point = split_data(spliting.next().unwrap().to_string());
         let second_point = split_data(spliting.next().unwrap().to_string());

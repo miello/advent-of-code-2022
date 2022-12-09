@@ -1,7 +1,7 @@
 fn part1_solve(input: String) {
     let mut max_val = 0;
     let mut now = 0;
-    input.split('\n').for_each(|line| {
+    input.lines().for_each(|line| {
         let line_trim = line.trim();
         if line_trim == "" {
             now = 0;
@@ -20,7 +20,7 @@ fn part1_solve(input: String) {
 fn part2_solve(input: String) {
     let mut arr: Vec<i32> = Vec::new();
     let mut now = 0;
-    input.split('\n').for_each(|line| {
+    input.lines().for_each(|line| {
         let line_trim = line.trim();
         if line_trim == "" {
             arr.push(now);

@@ -8,7 +8,7 @@ fn cal_score(input: &str) -> i32 {
 
 fn part1_solve(input: String) {
     let mut score = 0;
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         let sz = line.len();
         let mut set_a = BTreeSet::new();
         let mut set_b = BTreeSet::new();
@@ -37,7 +37,7 @@ fn part2_solve(input: String) {
     let mut score = 0;
     let mut cnt = 0;
     let mut cur_set: BTreeSet<&str> = BTreeSet::new();
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         if cnt == 3 {
             cur_set.iter().for_each(|f| {
                 score += cal_score(f) + 1;
