@@ -131,23 +131,76 @@ fn find_min_exceed_limit(folder: &Rc<RefCell<Folder>>, limit: i32) -> i32 {
     cnt
 }
 
-fn part1_solve(input: String) {
+fn part_one(input: String) -> String {
     let folder_structure = generate_folder_map(input);
     fill_folder_size(&folder_structure);
-    println!("{}", find_sum_less_than(&folder_structure, 100000));
+    format!("{}", find_sum_less_than(&folder_structure, 100000))
 }
 
-fn part2_solve(input: String) {
+fn part_two(input: String) -> String {
     let folder_structure = generate_folder_map(input);
     fill_folder_size(&folder_structure);
 
     let deleted_size = i32::max(folder_structure.borrow().size - 40000000, 0);
-    println!("{}", find_min_exceed_limit(&folder_structure, deleted_size));
+    format!("{}", find_min_exceed_limit(&folder_structure, deleted_size))
 }
 
-pub fn main(input: String) {
-    println!("Part 1");
-    part1_solve(input.clone());
-    println!("Part 2");
-    part2_solve(input);
+pub fn main() -> (fn(String) -> String, fn(String) -> String) {
+    (part_one, part_two)
+}
+
+#[cfg(test)]
+mod day7_test {
+    use super::*;
+    use std::fs;
+
+    const SAMPLE: &str = "$ cd /
+$ ls
+dir a
+14848514 b.txt
+8504156 c.dat
+dir d
+$ cd a
+$ ls
+dir e
+29116 f
+2557 g
+62596 h.lst
+$ cd e
+$ ls
+584 i
+$ cd ..
+$ cd ..
+$ cd d
+$ ls
+4060174 j
+8033020 d.log
+5626152 d.ext
+7214296 k";
+
+    fn read_testcase(path: &str) -> String {
+        fs::read_to_string(path).expect("Unable to read file")
+    }
+
+    #[test]
+    fn part_one_sample_test() {
+        assert_eq!("95437", part_one(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_one_real_test() {
+        let input = read_testcase("testcase/day7.txt");
+        assert_eq!("1490523", part_one(input));
+    }
+
+    #[test]
+    fn part_two_sample_test() {
+        assert_eq!("24933642", part_two(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_two_real_test() {
+        let input = read_testcase("testcase/day7.txt");
+        assert_eq!("12390492", part_two(input));
+    }
 }

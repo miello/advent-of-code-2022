@@ -45,7 +45,7 @@ fn split_command(input: &str) -> (i32, usize, usize) {
     (sz, from, to)
 }
 
-fn part1_solve(input: String) {
+fn part_one(input: String) -> String {
     let mut stock = split_input(&input);
     input.lines().for_each(|f| {
         if !f.contains("move") {
@@ -62,13 +62,13 @@ fn part1_solve(input: String) {
         }
     });
 
-    for i in 0..stock.len() {
-        print!("{}", stock[i][stock[i].len() - 1]);
-    }
-    println!();
+    stock
+        .iter()
+        .map(|f| f[f.len() - 1].to_string())
+        .collect::<String>()
 }
 
-fn part2_solve(input: String) {
+fn part_two(input: String) -> String {
     let mut stock = split_input(&input);
     input.lines().for_each(|f| {
         if !f.contains("move") {
@@ -86,15 +86,55 @@ fn part2_solve(input: String) {
         stock[to - 1].extend(tmp);
     });
 
-    for i in 0..stock.len() {
-        print!("{}", stock[i][stock[i].len() - 1]);
-    }
-    println!();
+    stock
+        .iter()
+        .map(|f| f[f.len() - 1].to_string())
+        .collect::<String>()
 }
 
-pub fn main(input: String) {
-    println!("Part 1");
-    part1_solve(input.clone());
-    println!("Part 2");
-    part2_solve(input);
+pub fn main() -> (fn(String) -> String, fn(String) -> String) {
+    (part_one, part_two)
+}
+
+#[cfg(test)]
+mod day5_test {
+    use super::*;
+    use std::fs;
+
+    const SAMPLE: &str = "    [D]    
+[N] [C]    
+[Z] [M] [P]
+ 1   2   3 
+
+move 1 from 2 to 1
+move 3 from 1 to 3
+move 2 from 2 to 1
+move 1 from 1 to 2
+    ";
+
+    fn read_testcase(path: &str) -> String {
+        fs::read_to_string(path).expect("Unable to read file")
+    }
+
+    #[test]
+    fn part_one_sample_test() {
+        assert_eq!("CMZ", part_one(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_one_real_test() {
+        let input = read_testcase("testcase/day5.txt");
+        assert_eq!("VWLCWGSDQ", part_one(input));
+    }
+
+    #[test]
+    fn part_two_sample_test() {
+        assert_eq!("MCD", part_two(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_two_real_test() {
+        let input = read_testcase("testcase/day5.txt");
+        assert_eq!("TCGLQSLPW", part_two(input));
+    }
 }

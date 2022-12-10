@@ -91,7 +91,7 @@ fn calculate_view(tree_height: &Vec<Vec<u32>>, x: usize, y: usize) -> i32 {
     now
 }
 
-fn part1_solve(input: String) {
+fn part_one(input: String) -> String {
     let tree_height = parse_data(input);
     let max_y = tree_height[0].len();
     let max_x = tree_height.len();
@@ -103,10 +103,10 @@ fn part1_solve(input: String) {
         }
     }
 
-    println!("{}", cnt);
+    format!("{}", cnt)
 }
 
-fn part2_solve(input: String) {
+fn part_two(input: String) -> String {
     let tree_height = parse_data(input);
     let max_y = tree_height[0].len();
     let max_x = tree_height.len();
@@ -118,12 +118,47 @@ fn part2_solve(input: String) {
         }
     }
 
-    println!("{}", cnt);
+    format!("{}", cnt)
 }
 
-pub fn main(input: String) {
-    println!("Part 1");
-    part1_solve(input.clone());
-    println!("Part 2");
-    part2_solve(input);
+pub fn main() -> (fn(String) -> String, fn(String) -> String) {
+    (part_one, part_two)
+}
+
+#[cfg(test)]
+mod day8_test {
+    use super::*;
+    use std::fs;
+
+    const SAMPLE: &str = "30373
+25512
+65332
+33549
+35390";
+
+    fn read_testcase(path: &str) -> String {
+        fs::read_to_string(path).expect("Unable to read file")
+    }
+
+    #[test]
+    fn part_one_sample_test() {
+        assert_eq!("21", part_one(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_one_real_test() {
+        let input = read_testcase("testcase/day8.txt");
+        assert_eq!("1818", part_one(input));
+    }
+
+    #[test]
+    fn part_two_sample_test() {
+        assert_eq!("8", part_two(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_two_real_test() {
+        let input = read_testcase("testcase/day8.txt");
+        assert_eq!("368368", part_two(input));
+    }
 }

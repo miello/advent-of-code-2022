@@ -3,7 +3,7 @@ mod solution;
 use solution::*;
 use std::fs;
 
-const DATA: &[fn(String)] = &[
+const DATA: &[fn() -> (fn(String) -> String, fn(String) -> String)] = &[
     day1::main,
     day2::main,
     day3::main,
@@ -14,6 +14,7 @@ const DATA: &[fn(String)] = &[
     day8::main,
     day9::main,
 ];
+
 fn main() {
     let input = fs::read_to_string("input.txt").expect("Unable to read file");
     println!("What day you want to solve ?");
@@ -26,5 +27,7 @@ fn main() {
         println!("Invalid day");
         return;
     }
-    DATA[day as usize - 1](input);
+    let (part_one, part_two) = DATA[day as usize - 1]();
+    println!("Part 1: {}", part_one(input.clone()));
+    println!("Part 2: {}", part_two(input.clone()));
 }

@@ -65,17 +65,65 @@ fn solve(input: String, sz: usize) -> usize {
     solution
 }
 
-fn part1_solve(input: String) {
-    println!("{}", solve(input, 2));
+fn part_one(input: String) -> String {
+    format!("{}", solve(input, 2))
 }
 
-fn part2_solve(input: String) {
-    println!("{}", solve(input, 10));
+fn part_two(input: String) -> String {
+    format!("{}", solve(input, 10))
 }
 
-pub fn main(input: String) {
-    println!("Part 1");
-    part1_solve(input.clone());
-    println!("Part 2");
-    part2_solve(input);
+pub fn main() -> (fn(String) -> String, fn(String) -> String) {
+    (part_one, part_two)
+}
+
+#[cfg(test)]
+mod day9_test {
+    use super::*;
+    use std::fs;
+
+    const SAMPLE: &str = "R 4
+U 4
+L 3
+D 1
+R 4
+D 1
+L 5
+R 2";
+
+    const LARGE_SAMPLE: &str = "R 5
+U 8
+L 8
+D 3
+R 17
+D 10
+L 25
+U 20";
+
+    fn read_testcase(path: &str) -> String {
+        fs::read_to_string(path).expect("Unable to read file")
+    }
+
+    #[test]
+    fn part_one_sample_test() {
+        assert_eq!("13", part_one(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_one_real_test() {
+        let input = read_testcase("testcase/day9.txt");
+        assert_eq!("6236", part_one(input));
+    }
+
+    #[test]
+    fn part_two_sample_test() {
+        assert_eq!("1", part_two(SAMPLE.to_string()));
+        assert_eq!("36", part_two(LARGE_SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_two_real_test() {
+        let input = read_testcase("testcase/day9.txt");
+        assert_eq!("2449", part_two(input));
+    }
 }
