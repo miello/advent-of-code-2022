@@ -14,6 +14,7 @@ const DATA: &[fn() -> (fn(String) -> String, fn(String) -> String)] = &[
     day8::main,
     day9::main,
     day10::main,
+    day11::main,
 ];
 
 fn main() {
