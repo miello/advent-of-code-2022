@@ -57,9 +57,7 @@ impl Monkey {
 
         let cal = match self.raw_ops_fn[1].as_str() {
             "+" => a + b,
-            "-" => a - b,
             "*" => a * b,
-            "/" => a / b,
             _ => 0,
         };
 
