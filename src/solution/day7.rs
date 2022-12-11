@@ -154,37 +154,14 @@ mod day7_test {
     use super::*;
     use std::fs;
 
-    const SAMPLE: &str = "$ cd /
-$ ls
-dir a
-14848514 b.txt
-8504156 c.dat
-dir d
-$ cd a
-$ ls
-dir e
-29116 f
-2557 g
-62596 h.lst
-$ cd e
-$ ls
-584 i
-$ cd ..
-$ cd ..
-$ cd d
-$ ls
-4060174 j
-8033020 d.log
-5626152 d.ext
-7214296 k";
-
     fn read_testcase(path: &str) -> String {
         fs::read_to_string(path).expect("Unable to read file")
     }
 
     #[test]
     fn part_one_sample_test() {
-        assert_eq!("95437", part_one(SAMPLE.to_string()));
+        let input = read_testcase("testcase/day7_sample.txt");
+        assert_eq!("95437", part_one(input));
     }
 
     #[test]
@@ -195,7 +172,8 @@ $ ls
 
     #[test]
     fn part_two_sample_test() {
-        assert_eq!("24933642", part_two(SAMPLE.to_string()));
+        let input = read_testcase("testcase/day7_sample.txt");
+        assert_eq!("24933642", part_two(input));
     }
 
     #[test]
