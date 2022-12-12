@@ -172,6 +172,6 @@ mod day9_test {
     #[test]
     fn part_two_real_test() {
         let input = read_testcase("testcase/day12.txt");
-        assert_eq!("402", part_one(input));
+        assert_eq!("402", part_two(input));
     }
 }
