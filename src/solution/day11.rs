@@ -133,43 +133,19 @@ fn part_one(input: String) -> String {
 }
 
 fn part_two(input: String) -> String {
-    let (mut monkey_worker, items) = parse_data(input);
-
-    // We will use different strategy to process part 2
-    let mut items_modified: Vec<(Vec<i64>, usize)> = items
-        .iter()
-        .map(|f| {
-            let val = f.0;
-            (
-                monkey_worker
-                    .iter()
-                    .map(|x| val % x.div)
-                    .collect::<Vec<i64>>(),
-                f.1,
-            )
-        })
-        .collect();
-
+    let (mut monkey_worker, mut items) = parse_data(input);
     let monkey_len = monkey_worker.len();
     let item_len = items.len();
     for _ in 0..10000 {
         for idx in 0..monkey_len {
             let mut found: usize = 0;
             for idx_item in 0..item_len {
-                let (val, worker_idx) = &items_modified[idx_item - found];
-                if *worker_idx == idx {
-                    let next_val = val
-                        .iter()
-                        .enumerate()
-                        .map(|(i, f)| {
-                            monkey_worker[idx].calculate_next_value(*f) % monkey_worker[i].div
-                        })
-                        .collect::<Vec<i64>>();
-
-                    let next_monkey = monkey_worker[idx].get_next_monkey(next_val[idx]);
-
-                    items_modified.remove(idx_item - found);
-                    items_modified.push((next_val, next_monkey));
+                let (val, worker_idx) = items[idx_item - found];
+                if worker_idx == idx {
+                    let next_val = monkey_worker[idx].calculate_next_value(val) % 9699690;
+                    let next_monkey = monkey_worker[idx].get_next_monkey(next_val);
+                    items.remove(idx_item - found);
+                    items.push((next_val, next_monkey));
                     monkey_worker[idx].cnt_ops += 1;
                     found += 1;
                 }
