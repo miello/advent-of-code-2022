@@ -132,17 +132,39 @@ fn part_one(input: String) -> String {
     format!("{}", monkey_worker[0].cnt_ops * monkey_worker[1].cnt_ops)
 }
 
+fn gcd(a: i64, b: i64) -> i64 {
+    if a == 0 {
+        return b;
+    }
+
+    if b == 0 {
+        return a;
+    }
+
+    if a > b {
+        return gcd(a % b, b);
+    }
+
+    gcd(a, b % a)
+}
+
 fn part_two(input: String) -> String {
     let (mut monkey_worker, mut items) = parse_data(input);
     let monkey_len = monkey_worker.len();
     let item_len = items.len();
+
+    let mut lcm = 1;
+    for monkey in &monkey_worker {
+        lcm = monkey.div * lcm / gcd(monkey.div, lcm);
+    }
+
     for _ in 0..10000 {
         for idx in 0..monkey_len {
             let mut found: usize = 0;
             for idx_item in 0..item_len {
                 let (val, worker_idx) = items[idx_item - found];
                 if worker_idx == idx {
-                    let next_val = monkey_worker[idx].calculate_next_value(val) % 9699690;
+                    let next_val = monkey_worker[idx].calculate_next_value(val) % lcm;
                     let next_monkey = monkey_worker[idx].get_next_monkey(next_val);
                     items.remove(idx_item - found);
                     items.push((next_val, next_monkey));
