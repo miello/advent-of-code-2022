@@ -235,14 +235,11 @@ mod day9_test {
 [[]]
 
 [1,[2,[3,[4,[5,6,7]]]],8,9]
-[1,[2,[3,[4,[5,6,0]]]],8,9]
-
-[2,2,3]
-[2,[[2],4]]";
+[1,[2,[3,[4,[5,6,0]]]],8,9]";
 
     #[test]
     fn part_one_sample_test() {
-        assert_eq!("22", part_one(SAMPLE.to_string()));
+        assert_eq!("13", part_one(SAMPLE.to_string()));
     }
 
     #[test]
@@ -259,6 +256,6 @@ mod day9_test {
     #[test]
     fn part_two_real_test() {
         let input = read_testcase("testcase/day13.txt");
-        assert_eq!("23868", part_one(input));
+        assert_eq!("23868", part_two(input));
     }
 }
