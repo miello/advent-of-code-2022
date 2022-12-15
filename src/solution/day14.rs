@@ -119,7 +119,7 @@ pub fn main() -> (fn(String) -> String, fn(String) -> String) {
 }
 
 #[cfg(test)]
-mod day6_test {
+mod day14_test {
     use super::*;
     use std::fs;
 
