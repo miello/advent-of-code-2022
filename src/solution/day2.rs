@@ -48,20 +48,20 @@ fn get_score(mine: &str, opponent: &str) -> i32 {
     return current_score;
 }
 
-fn part1_solve(input: String) {
+fn part_one(input: String) -> String {
     let mut current_score = 0;
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         let mut split = line.split(" ");
         let opponent = split.next().unwrap();
         let mine = split.next().unwrap();
         current_score += get_score(mine, opponent);
     }
-    println!("{}", current_score);
+    format!("{}", current_score)
 }
 
-fn part2_solve(input: String) {
+fn part_two(input: String) -> String {
     let mut current_score = 0;
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         let mut split = line.split(" ");
         let opponent = split.next().unwrap();
         let result_status = split.next().unwrap();
@@ -88,12 +88,45 @@ fn part2_solve(input: String) {
         current_score += get_score(convert_opponent_to_mine(mine), opponent);
     }
 
-    println!("{}", current_score);
+    format!("{}", current_score)
 }
 
-pub fn main(input: String) {
-    println!("Part 1");
-    part1_solve(input.clone());
-    println!("Part 2");
-    part2_solve(input);
+pub fn main() -> (fn(String) -> String, fn(String) -> String) {
+    (part_one, part_two)
+}
+
+#[cfg(test)]
+mod day2_test {
+    use super::*;
+    use std::fs;
+
+    const SAMPLE: &str = "A Y
+B X
+C Z";
+
+    fn read_testcase(path: &str) -> String {
+        fs::read_to_string(path).expect("Unable to read file")
+    }
+
+    #[test]
+    fn part_one_sample_test() {
+        assert_eq!("15", part_one(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_one_real_test() {
+        let input = read_testcase("testcase/day2.txt");
+        assert_eq!("12740", part_one(input));
+    }
+
+    #[test]
+    fn part_two_sample_test() {
+        assert_eq!("12", part_two(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_two_real_test() {
+        let input = read_testcase("testcase/day2.txt");
+        assert_eq!("11980", part_two(input));
+    }
 }

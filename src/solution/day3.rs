@@ -6,9 +6,9 @@ fn cal_score(input: &str) -> i32 {
     return CHAR_LIST.find(input).unwrap().try_into().unwrap();
 }
 
-fn part1_solve(input: String) {
+fn part_one(input: String) -> String {
     let mut score = 0;
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         let sz = line.len();
         let mut set_a = BTreeSet::new();
         let mut set_b = BTreeSet::new();
@@ -30,14 +30,14 @@ fn part1_solve(input: String) {
             score += cal_score(ch) + 1;
         });
     }
-    println!("{}", score);
+    format!("{}", score)
 }
 
-fn part2_solve(input: String) {
+fn part_two(input: String) -> String {
     let mut score = 0;
     let mut cnt = 0;
     let mut cur_set: BTreeSet<&str> = BTreeSet::new();
-    for line in input.split("\r\n") {
+    for line in input.lines() {
         if cnt == 3 {
             cur_set.iter().for_each(|f| {
                 score += cal_score(f) + 1;
@@ -70,12 +70,49 @@ fn part2_solve(input: String) {
     cur_set.iter().for_each(|f| {
         score += cal_score(f) + 1;
     });
-    println!("{}", score);
+
+    format!("{}", score)
 }
 
-pub fn main(input: String) {
-    println!("Part 1");
-    part1_solve(input.clone());
-    println!("Part 2");
-    part2_solve(input);
+pub fn main() -> (fn(String) -> String, fn(String) -> String) {
+    (part_one, part_two)
+}
+
+#[cfg(test)]
+mod day3_test {
+    use super::*;
+    use std::fs;
+
+    const SAMPLE: &str = "vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw";
+
+    fn read_testcase(path: &str) -> String {
+        fs::read_to_string(path).expect("Unable to read file")
+    }
+
+    #[test]
+    fn part_one_sample_test() {
+        assert_eq!("157", part_one(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_one_real_test() {
+        let input = read_testcase("testcase/day3.txt");
+        assert_eq!("7446", part_one(input));
+    }
+
+    #[test]
+    fn part_two_sample_test() {
+        assert_eq!("70", part_two(SAMPLE.to_string()));
+    }
+
+    #[test]
+    fn part_two_real_test() {
+        let input = read_testcase("testcase/day3.txt");
+        assert_eq!("2646", part_two(input));
+    }
 }

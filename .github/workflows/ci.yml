@@ -1,0 +1,26 @@
+name: CI
+# Runs on all PRs and pushes to any branch. See the section
+# on event hooks for other options.
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-versions:
+    name: Test Rust ${{ matrix.rust }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # if you have an MSRV, you can of course include it here too.
+        rust: [stable, beta, nightly]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hecrj/setup-rust-action@v1
+        with:
+          rust-version: ${{ matrix.rust }}
+      # You may want to test other featuresets here...
+      - run: cargo test --verbose --workspace --all-features
+      - run: cargo test --verbose --workspace --no-default-features
